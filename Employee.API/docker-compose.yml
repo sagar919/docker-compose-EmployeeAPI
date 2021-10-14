@@ -1,0 +1,21 @@
+version: '3.8'
+services: 
+    Sagar:
+        image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+        environment: 
+            ACCEPT_EULA: "Y"
+            SA_PASSWORD: "test@123"
+            MSSQL_PID: Express
+        ports: 
+            - "1433:1433"
+    employeeapi:
+        build: .
+        depends_on: 
+            - Sagar
+        environment: 
+            ServerName: "Sagar"
+            Database: "Employee"
+            UserName: "SA"
+            Password: "test@123"
+        ports: 
+            - "8090:80"
